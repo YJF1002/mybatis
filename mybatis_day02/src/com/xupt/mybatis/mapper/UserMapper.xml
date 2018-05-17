@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 写sql语句
+命名空间 
+ -->
+<mapper namespace="com.xupt.mybatis.mapper.UserMapper">
+	<!-- 一对一用订单查询用户（以订单为中心使用左连接）记得要给订单映射 -->
+	<resultMap type="Orders" id="orderslist">
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<collection property="user" ofType="User">
+			<id column="user_id" property="id"/>
+			<result column="username" property="username"  />
+		</collection>
+	</resultMap>
+	<select id="findOrdersByOrdersId" resultMap="orderslist">
+		SELECT
+		o.id,
+		o.number,
+		o.user_id,
+		u.username
+		FROM
+		orders o
+		LEFT JOIN user u ON u.id = o.user_id
+	</select>
+	
+	<!-- 多对一查询用户订单(以用户为中心使用左连接) -->
+	<resultMap type="User" id="user">
+		<id  column="user_id" property="id"/>
+		<result column="username" property="username" />
+		<collection property="ordersList" ofType="Orders">
+			<id  column="id" property="id" />
+			<result property="number" column="number"/>
+		</collection>
+	</resultMap>
+	
+	<select id="findOrderByUserId" resultMap="user">
+		SELECT
+		o.id,
+		o.number,
+		o.user_id,
+		u.username
+		FROM
+		user u
+		LEFT JOIN orders o ON u.id = o.user_id
+	</select>
+</mapper>
