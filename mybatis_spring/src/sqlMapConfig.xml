@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- <typeAlias type="com.itheima.mybatis.pojo.User" alias="User"/>   -->
+		<package name="com.xupt.mybatis.pojo"/><!-- 默认为类的名称 -->
+	</typeAliases>    
+
+	<mappers>			
+			 <!-- 传统dao开发指向的mapper.xml<mapper resource="UserMapper.xml"/> -->
+			<!-- mapper动态代理开发指定mapper.xml --> 
+			<package name="com.xupt.mybatis.mapper"/> 
+			 
+	</mappers>
+</configuration>
